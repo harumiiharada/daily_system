@@ -29,13 +29,14 @@ public class ReportsUpdateServlet extends HttpServlet {
      */
     public ReportsUpdateServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String _token = request.getParameter("_token");
+        String _token = (String)request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
@@ -45,6 +46,8 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+            r.setAttendance_at(request.getParameter("attendance_at"));
+            r.setLeave_at(request.getParameter("leave_at"));
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {

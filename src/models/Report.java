@@ -15,25 +15,28 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 @Table(name = "reports")
 @NamedQueries({
-    @NamedQuery(
-            name = "getAllReports",
-            query = "SELECT r FROM Report AS r ORDER BY r.id DESC"
-        ),
-        @NamedQuery(
-            name = "getReportsCount",
-            query = "SELECT COUNT(r) FROM Report AS r"
-        ),
-        @NamedQuery(
-            name = "getMyAllReports",
-            query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
-        ),
-        @NamedQuery(
-            name = "getMyReportsCount",
-            query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
-        )
-    })
+        @NamedQuery(name = "getAllReports", query = "SELECT r FROM Report AS r ORDER BY r.id DESC"),
+        @NamedQuery(name = "getReportsCount", query = "SELECT COUNT(r) FROM Report AS r"),
+        @NamedQuery(name = "getMyAllReports", query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"),
+        @NamedQuery(name = "getMyReportsCount", query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee")
+})
 @Entity
 public class Report {
     @Id
@@ -60,6 +63,12 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+    @Column(name = "attendance_at", nullable = false)
+    private String attendance_at;
+
+    @Column(name = "leave_at", nullable = false)
+    private String leave_at;
 
     public Integer getId() {
         return id;
@@ -115,5 +124,20 @@ public class Report {
 
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
+    }
+    public  String getAttendance_at() {
+        return attendance_at;
+    }
+
+    public void setAttendance_at(String attendance_at) {
+        this.attendance_at = attendance_at;
+    }
+
+    public String getLeave_at() {
+        return leave_at;
+    }
+
+    public void setLeave_at(String leave_at) {
+        this.leave_at = leave_at;
     }
 }

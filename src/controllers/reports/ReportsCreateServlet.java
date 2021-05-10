@@ -30,13 +30,14 @@ public class ReportsCreateServlet extends HttpServlet {
      */
     public ReportsCreateServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String _token = request.getParameter("_token");
+        String _token = (String)request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
@@ -53,10 +54,13 @@ public class ReportsCreateServlet extends HttpServlet {
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
+            r.setAttendance_at(request.getParameter("attendance_at"));
+            r.setLeave_at(request.getParameter("leave_at"));
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
+
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {
@@ -79,5 +83,4 @@ public class ReportsCreateServlet extends HttpServlet {
             }
         }
     }
-
 }
